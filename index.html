@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Studio Planner</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="matrixCanvas"></canvas>
+  <div id="appOverlay" class="overlay hidden"></div>
+
+  <div class="login-panel" id="loginPanel">
+    <div class="login-card">
+      <h1>VOIDFALL STUDIO PLANNER</h1>
+      <p class="description">Secure access code login for Roblox Studio planning.</p>
+      <label for="accessCode">ACCESS CODE</label>
+      <input id="accessCode" type="text" maxlength="16" placeholder="Enter your access code" autofocus />
+      <button id="loginBtn">ENTER</button>
+      <p class="hint">Request your access code from the owner or admin.</p>
+      <p id="loginMessage" class="message"></p>
+    </div>
+  </div>
+
+  <div id="mainUI" class="hidden">
+    <header class="topbar">
+      <div>
+        <span class="brand">VOIDFALL</span>
+        <span class="tag">Roblox Studio Planning</span>
+      </div>
+      <nav class="nav-bar">
+        <button class="nav-btn active" id="navDashboard">Dashboard</button>
+        <button class="nav-btn" id="navTasks">Tasks</button>
+        <button class="nav-btn hidden" id="navAdmin">Admin</button>
+      </nav>
+      <div class="top-actions">
+        <div class="user-badge">
+          <span id="userName"></span>
+          <span id="userRole"></span>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="panel cards-panel">
+        <div class="card glass quick-stats">
+          <h2>Welcome back</h2>
+          <p id="welcomeText">Loading...</p>
+        </div>
+        <div class="card glass actions-panel">
+          <button class="wide-btn" id="showTasksBtn">Tasks</button>
+          <button class="wide-btn hidden" id="showAdminBtn">Admin Panel</button>
+          <button class="wide-btn secondary" id="logoutBtn">Logout</button>
+        </div>
+      </section>
+
+      <section id="tasksSection" class="panel glass content-panel hidden">
+        <div class="section-header">
+          <h2>Task Hub</h2>
+          <button class="small-btn hidden" id="createTaskBtn">New Task</button>
+        </div>
+        <div id="tasksList" class="task-grid"></div>
+        <div id="taskDetail" class="task-detail hidden"></div>
+      </section>
+
+
+      <section id="adminSection" class="panel glass content-panel hidden">
+        <div class="section-header">
+          <h2>Admin Panel</h2>
+          <span class="role-note">Owner can create admin accounts and view all codes.</span>
+        </div>
+        <div class="admin-grid">
+          <div class="glass admin-card">
+            <h3>Create access code</h3>
+            <label for="newDisplayName">Display Name</label>
+            <input id="newDisplayName" type="text" placeholder="Person name" />
+            <label for="newRole">Role</label>
+            <select id="newRole">
+              <option value="member">Member</option>
+              <option value="admin">Admin</option>
+            </select>
+            <label for="newCode">Access Code (optional)</label>
+            <input id="newCode" type="text" maxlength="16" placeholder="Leave blank to auto-generate" />
+            <button class="wide-btn" id="createAccessCodeBtn">Generate Code</button>
+            <p id="accessCodeMessage" class="message"></p>
+          </div>
+          <div class="glass admin-card codes-list-card">
+            <h3>Access Codes</h3>
+            <div id="codesTable" class="codes-table"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="taskCardTemplate">
+    <div class="task-card glass">
+      <div class="task-card-title"><span class="task-title"></span><span class="status-badge"></span></div>
+      <div class="task-meta">
+        <span class="meta-item"><strong>Assigned to</strong><span class="task-assigned"></span></span>
+        <span class="meta-item"><strong>Created by</strong><span class="task-creator"></span></span>
+        <span class="meta-item"><strong>Created</strong><span class="task-created"></span></span>
+      </div>
+      <div class="task-actions">
+        <button class="small-btn view-task-btn">Open</button>
+        <button class="small-btn mark-done-btn hidden">Mark Done</button>
+        <button class="small-btn danger delete-task-btn hidden">Delete</button>
+      </div>
+    </div>
+  </template>
+
+  <template id="taskDetailTemplate">
+    <div class="detail-header">
+      <div>
+        <h2 class="detail-title"></h2>
+        <p class="detail-status"></p>
+      </div>
+      <div class="detail-actions">
+        <button class="small-btn reassign-btn hidden">Reassign</button>
+        <button class="small-btn danger delete-task-detail-btn hidden">Delete</button>
+        <button class="small-btn" id="closeTaskDetailBtn">Close</button>
+      </div>
+    </div>
+    <div class="detail-meta glass">
+      <div><strong>Assigned to</strong><p class="detail-assigned"></p></div>
+      <div><strong>Created by</strong><p class="detail-creator"></p></div>
+      <div><strong>Created</strong><p class="detail-created"></p></div>
+    </div>
+    <div class="detail-edit glass hidden">
+      <label>Status</label>
+      <select class="edit-status"></select>
+      <label>Assigned to</label>
+      <input class="edit-assigned" type="text" />
+      <button class="wide-btn edit-save-btn">Save Changes</button>
+    </div>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
